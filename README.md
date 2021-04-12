@@ -31,15 +31,15 @@ $ make clean - to clean temporary files
 # Options
 
 ```
-	[] - requried
-	{} - optional
+[] - requried
+{} - optional
 
-	[ -i arg | --interface arg ] 				- The name of the device on which we will sniff.
-												  Whithout argument print all available network devices
-	{-p ­­port} 							 	  - Port filter
-	{[--tcp|-t] [--udp|-u] [--arp] [--icmp]}    - Packet types filters
-	{-n num}									- Number of packets to be printed
-	{-h | --help}								- Print help message
+[ -i arg | --interface arg ] - The name of the device on which we will sniff.
+                               Whithout argument print all available network devices
+{-p ­­port} - Port filter
+{[--tcp|-t] [--udp|-u] [--arp] [--icmp]} - Packet types filters
+{-n num} - Number of packets to be printed
+{-h | --help} - Print help message
 ```
 
 # Example usage

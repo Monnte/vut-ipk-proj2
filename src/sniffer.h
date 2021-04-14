@@ -9,19 +9,19 @@
  */
 #pragma once
 
+ /**
+  * @see https://www.tcpdump.org/manpages/pcap.3pcap.html
+  */
 #include <pcap/pcap.h>
-#include <time.h>
-#include <math.h>
-#include <vector>
 #include "packet.h"
 
- /**
-  * @brief function for pcap_loop callback for handling packets
-  *
-  * @param user user data passed from pcap_loop fucntion
-  * @param pkt_header packet header information (time / packet length)
-  * @param pkt_data packet data
-  */
+  /**
+   * @brief function for pcap_loop callback for handling packets
+   *
+   * @param user user data passed from pcap_loop fucntion
+   * @param pkt_header packet header information (time / packet length)
+   * @param pkt_data packet data
+   */
 void handle_packet(u_char* user,const struct pcap_pkthdr* pkt_header,const u_char* pkt_data);
 
 
@@ -30,13 +30,11 @@ class sniffer
 public:
 	/**
 	 * @brief Construct a new sniffer object
-	 *
 	 */
 	sniffer();
 
 	/**
 	 * @brief Destroy the sniffer object
-	 *
 	 */
 	~sniffer();
 
@@ -48,21 +46,24 @@ public:
 	 * @param timeout packet buffer timeout
 	 * @param promisc promiscuous mode
 	 * @param packet_cnt number of packets that will be captured
-	 * @return 0 - success, 1 - error while inicialization
+	 * @return 0 - success
+	 * @return 1 - error
 	 */
 	int init(char* interface,char* filter,int timeout,int promisc,int packet_cnt);
 
 	/**
 	 * @brief Print all available network devices
 	 *
-	 * @return 0 - success, 1 - error
+	 * @return 0 - success
+	 * @return 1 - error
 	 */
 	int print_interfaces();
 
 	/**
 	 * @brief Stars sniffing packets on network
 	 *
-	 * @return 0 - success, 1 - error while capturing packets
+	 * @return 0 - success
+	 * @return 1 - error
 	 */
 	int capture_packets();
 

@@ -23,13 +23,13 @@ int sniffer::init(char* interface,char* filter,int timeout,int promisc,int packe
 	this->packet_cnt = packet_cnt;
 
 	if (pcap_lookupnet(this->interface,&(this->netp),&(this->maskp),this->error_message) == -1) {
-		printf("Error: %s\n",error_message);
+		fprintf(stderr,"Error: %s\n",error_message);
 		return 1;
 	}
 
 	this->device = pcap_open_live(this->interface,BUFSIZ,this->promisc,this->timeout,this->error_message);
 	if (this->device == NULL) {
-		printf("Error: %s\n",this->error_message);
+		fprintf(stderr,"Error: %s\n",this->error_message);
 		return 1;
 	}
 
@@ -82,7 +82,7 @@ int sniffer::print_interfaces() {
 	pcap_if_t* interfaces;
 
 	if (pcap_findalldevs(&interfaces,this->error_message) == -1) {
-		printf("Error: %s\n",this->error_message);
+		fprintf(stderr,"Error: %s\n",this->error_message);
 		return 1;
 	}
 

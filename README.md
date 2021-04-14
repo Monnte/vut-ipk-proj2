@@ -5,12 +5,12 @@ Author: Peter Zdravecký
 # Introduction
 
 Packet sniffer is program used for packet sniffing on network devices.
-Ethernet datalink support only.
+Ethernet datalink support only. IPv4 and IPv6 support.
 
 # Packet filtering
 
 Sniffer supports packets filtering.
-Options can be combined.
+Filter options can be combined.
 Port filter and packet type filter is available.
 
 ## Supported packets types
@@ -25,7 +25,7 @@ Port filter and packet type filter is available.
 
 ```
 $ make - to build program
-$ make clean - to clean temporary files
+$ make clean - to clean temporary files and binary file
 ```
 
 # Options
@@ -34,7 +34,7 @@ $ make clean - to clean temporary files
 [] - requried
 {} - optional
 
-[ -i arg | --interface arg ] - The name of the device on which we will sniff.
+[ -i iterface | --interface interface ] - The name of the device on which we will sniff.
                                Whithout argument print all available network devices
 {-p ­­port} - Port filter
 {[--tcp|-t] [--udp|-u] [--arp] [--icmp]} - Packet types filters
@@ -48,7 +48,7 @@ Run program with root acess `sudo`
 
 ```
 $ ./ipk-sniffer -i eth0
-$ ./ipk-sniffer -i eth0 -p 23 --tcp -n
+$ ./ipk-sniffer -i eth0 -p 23 --tcp -n 1
 $ ./ipk-sniffer -i eth0 --udp
 $ ./ipk-sniffer -i lo --udp --tcp -p 80 -n 100
 $ ./ipk-sniffer --help

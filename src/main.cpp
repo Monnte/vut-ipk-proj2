@@ -10,13 +10,12 @@
  */
 #include "main.h"
 
-int main(int argc,char** argv)
-{
+int main(int argc,char** argv) {
 	/***---------------------------------------------------------------***/
 	/* Inicialization */
 
 	_sniffer = sniffer();
-	signal(SIGINT,ctrl_c);
+	signal(SIGINT,handle_exit);
 
 
 	/***---------------------------------------------------------------***/
@@ -27,7 +26,7 @@ int main(int argc,char** argv)
 
 	/* Variables and flags */
 	char* interface = NULL;
-	std::string filter = "tcp or udp or arp or icmp or icmp6";
+	string filter = "tcp or udp or arp or icmp or icmp6";
 	int udp = 0;
 	int tcp = 0;
 	int arp = 0;
@@ -100,6 +99,7 @@ int main(int argc,char** argv)
 
 	if (!interface) {
 		fprintf(stderr,"Error: -i option is requried\n");
+		print_help();
 		return 1;
 	}
 
@@ -120,18 +120,17 @@ int main(int argc,char** argv)
 	/***---------------------------------------------------------------***/
 	/* Sniffing packets and printing */
 
-	if (_sniffer.init(interface,(char*)(filter.c_str()),1000,1,packet_cnt)) {
+	int timeout = 1000; // 1s
+	int promisc = 1;
+	if (_sniffer.init(interface,(char*)(filter.c_str()),timeout,promisc,packet_cnt)) {
 		return 1;
 	}
 
-
-	if (_sniffer.datalink_type != DLT_EN10MB)
-	{
+	if (_sniffer.datalink_type != DLT_EN10MB) {
 		fprintf(stderr,"Error: only ethernet support is available\n");
 		return 1;
 	}
-	if (_sniffer.capture_packets())
-	{
+	if (_sniffer.capture_packets()) {
 		fprintf(stderr,"Error: an error has occurred while capturing packets\n");
 		return 1;
 	}
@@ -141,20 +140,20 @@ int main(int argc,char** argv)
 	return 0;
 }
 
-std::string set_filter(int port,int tcp,int udp,int icmp,int arp) {
-	std::string filter = "";
+string set_filter(int port,int tcp,int udp,int icmp,int arp) {
+	string filter = "";
 
 	filter += tcp ? (filter.size() ? " or tcp" : "(tcp") : "";
 	filter += udp ? (filter.size() ? " or udp" : "(udp") : "";
 	filter += arp ? (filter.size() ? " or arp" : "(arp") : "";
 	filter += icmp ? (filter.size() ? " or icmp or icmp6" : "(icmp or icmp6") : "";
 	filter += filter.size() ? ")" : "";
-	filter += port ? (filter.size() ? " and port " + std::to_string(port) : "port " + std::to_string(port)) : "";
+	filter += port ? (filter.size() ? " and port " + to_string(port) : "port " + to_string(port)) : "";
 
 	return filter;
 }
 
-void ctrl_c(int s) {
+void handle_exit(int s) {
 	if (s == 2)
 	{
 		fprintf(stderr,"\nShutting down sniffer...\n");
@@ -164,8 +163,18 @@ void ctrl_c(int s) {
 }
 
 void print_help() {
+	printf("------------------------\n");
 	printf("Packet sniffer v0.1\n");
 	printf("Usage:");
-	printf("  ./ipk-sniffer [-i rozhraní | --interface rozhraní] {-p port} {[--tcp|-t] [--udp|-u] [--arp] [--icmp] } {-n packet_cnt}\n");
-	printf("Author: Peter Zdravecký\n");
+	printf("  ./ipk-sniffer [-i interface | --interface interface] {-p port} {[--tcp|-t] [--udp|-u] [--arp] [--icmp] } {-n packet_cnt}\n\n");
+	printf("    [] - requried options\n");
+	printf("    {} - optional options\n\n");
+	printf("    [ -i iterface | --interface interface ]  - The name of the device on which we will sniff.\n");
+	printf("                                               Whithout argument print all available network devices\n");
+	printf("    {-p ­­port}                                - Port filter\n");
+	printf("    {[--tcp|-t] [--udp|-u] [--arp] [--icmp]} - Packet types filters\n");
+	printf("    {-n num}                                 - Number of packets to be printed\n");
+	printf("    {-h | --help}                            - Print help message\n");
+	printf("\nAuthor: Peter Zdravecký\n");
+	printf("------------------------\n");
 }

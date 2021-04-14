@@ -10,6 +10,9 @@
 #pragma once
 
 #include <stdio.h>
+ /**
+  * @see https://www.tcpdump.org/manpages/pcap.3pcap.html
+  */
 #include <pcap/pcap.h>
 
 #include <time.h>
@@ -26,9 +29,10 @@
 #include <netinet/if_ether.h>
 #include <net/ethernet.h>
 
+using namespace std;
 
-class packet
-{
+
+class packet {
 public:
 	/**
 	 * @brief Construct a new packet object
@@ -89,10 +93,10 @@ private:
 	 *
 	 * @return packet timestamp in RFC3339 format
 	 */
-	std::string get_packet_time();
+	string get_packet_time();
 
 	/* Variables */
 	const struct pcap_pkthdr* pkt_header;
 	const u_char* pkt_data;
-	std::string header;
+	string header;
 };

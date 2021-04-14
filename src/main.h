@@ -15,12 +15,14 @@
 #include <string>
 #include "sniffer.h"
 
- /**
-  * @brief Handling keyboard interrupt signal. Correctly shuts down sniffer
-  *
-  * @param s signal code
-  */
-void ctrl_c(int s);
+using namespace std;
+
+/**
+ * @brief Handling keyboard interrupt signal. Correctly shuts down sniffer
+ *
+ * @param s signal code
+ */
+void handle_exit(int s);
 
 /**
  * @brief Prints program help and usage
@@ -38,8 +40,10 @@ void print_help();
  *
  * @return filter string for sniffer
  */
-std::string set_filter(int port,int tcp,int udp,int icmp,int arp);
 
+
+
+string set_filter(int port,int tcp,int udp,int icmp,int arp);
 
 
 sniffer _sniffer;

@@ -37,6 +37,7 @@ void print_help();
  * @param udp udp flag
  * @param icmp icmp flag
  * @param arp arp flag
+ * @param igmp igmp flag
  *
  * @return filter string for sniffer
  */

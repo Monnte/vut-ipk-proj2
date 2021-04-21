@@ -28,6 +28,7 @@
 #include <netinet/ip6.h>
 #include <netinet/if_ether.h>
 #include <net/ethernet.h>
+#include <netinet/igmp.h>
 
 using namespace std;
 

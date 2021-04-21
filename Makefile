@@ -1,7 +1,7 @@
 OBJS=obj/main.o obj/packet.o obj/sniffer.o
 HEADERS=src/main.h src/packet.h src/sniffer.h
 CC=g++
-CFLAGS=-Wall -Wextra -pedantic -lpcap
+CFLAGS=-Wall -Wextra -pedantic -lpcap -Wno-unused-variable -Wno-unused-parameter
 BINARY=ipk-sniffer
 
 

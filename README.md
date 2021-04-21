@@ -20,6 +20,7 @@ Port filter and packet type filter is available.
 - ICMP
 - ICMP6
 - ARP
+- IGMP
 
 # How to build project
 
@@ -37,7 +38,7 @@ $ make clean - to clean temporary files and binary file
 [ -i iterface | --interface interface ] - The name of the device on which we will sniff.
                                Whithout argument print all available network devices
 {-p ­­port} - Port filter
-{[--tcp|-t] [--udp|-u] [--arp] [--icmp]} - Packet types filters
+{[--tcp|-t] [--udp|-u] [--arp] [--icmp] [--igmp]} - Packet types filters
 {-n num} - Number of packets to be printed
 {-h | --help} - Print help message
 ```

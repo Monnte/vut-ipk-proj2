@@ -7,13 +7,13 @@
  * @copyright Copyright (c) 2021
  *
  */
+#include "sniffer.h"
+#include <getopt.h>
 #include <iostream>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <getopt.h>
-#include <signal.h>
 #include <string>
-#include "sniffer.h"
 
 using namespace std;
 
@@ -41,9 +41,6 @@ void print_help();
  * @return filter string for sniffer
  */
 
-
-
-string set_filter(int port,int tcp,int udp,int icmp,int arp);
-
+string set_filter(int port, int tcp, int udp, int icmp, int arp, int igmp);
 
 sniffer _sniffer;

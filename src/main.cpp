@@ -94,9 +94,7 @@ int main(int argc, char **argv) {
     }
 
     if (!interface) {
-        fprintf(stderr, "Error: -i option is requried\n");
-        print_help();
-        return 1;
+        return _sniffer.print_interfaces();
     }
 
     if (port_flag && (port < 1 || port > 65535)) {

@@ -9,7 +9,7 @@
  */
 #include "sniffer.h"
 
-sniffer::sniffer() {}
+sniffer::sniffer() { this->loop_running = false; }
 
 sniffer::~sniffer() {}
 

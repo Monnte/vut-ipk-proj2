@@ -98,13 +98,14 @@ void packet::handle_ip_packet() {
 }
 
 void packet::handle_arp_packet() {
-    LENGTH_CHECK(sizeof(ether_arp), pkt_header->caplen - sizeof(ether_header))
-    struct ether_arp *arp_header = (struct ether_arp *)(this->pkt_data + sizeof(ether_header));
+    struct ether_header *eth_header = (struct ether_header *)this->pkt_data;
     char source[256];
     char dest[256];
 
-    sprintf(source, "%02x:%02x:%02x:%02x:%02x:%02x", arp_header->arp_sha[0], arp_header->arp_sha[1], arp_header->arp_sha[2], arp_header->arp_sha[3], arp_header->arp_sha[4], arp_header->arp_sha[5]);
-    sprintf(dest, "%02x:%02x:%02x:%02x:%02x:%02x", arp_header->arp_tha[0], arp_header->arp_tha[1], arp_header->arp_tha[2], arp_header->arp_tha[3], arp_header->arp_tha[4], arp_header->arp_tha[5]);
+    sprintf(source, "%02x:%02x:%02x:%02x:%02x:%02x", eth_header->ether_shost[0], eth_header->ether_shost[1], eth_header->ether_shost[2], eth_header->ether_shost[3], eth_header->ether_shost[4],
+            eth_header->ether_shost[5]);
+    sprintf(dest, "%02x:%02x:%02x:%02x:%02x:%02x", eth_header->ether_dhost[0], eth_header->ether_dhost[1], eth_header->ether_dhost[2], eth_header->ether_dhost[3], eth_header->ether_dhost[4],
+            eth_header->ether_dhost[5]);
 
     this->header += get_packet_time();
     this->header += source + string(" > ") + dest;

@@ -152,57 +152,20 @@ void packet::handle_ip6_packet() {
 }
 
 void packet::print_data() {
-    int size = (int)this->pkt_header->caplen;
-    int hexcounter = -16;
-
-    if (size == 0)
-        return;
-
-    int i;
-    for (i = 0; i < size; i++) {
-        if (i != 0 && i % 16 == 0) {
-            printf("\n");
-        }
-
-        if (i != 0 && i % 16 == 0) {
-            printf("0x%04X:  ", hexcounter += 16);
-            for (int j = i - 16; j < i; j++) {
-
-                printf("%02X ", this->pkt_data[j]);
-            }
-
-            for (int j = i - 16; j < i; j++) {
-                if (j % 8 == 0)
-                    printf(" ");
-                if (isprint(this->pkt_data[j]))
-                    printf("%c", this->pkt_data[j]);
-                else
-                    printf(".");
-            }
-        }
-    }
-
-    /* THE REMAINING OF PACKET DATA */
     printf("\n");
-    printf("0x%04X:  ", hexcounter += 16);
-    for (int j = i - i % 16; j < i; j++) {
-        printf("%02X ", this->pkt_data[j]);
+    for (unsigned int i = 0; i < this->pkt_header->caplen;) {
+        printf("0x%04x:  ", i);
+        char line[17] = "";
+        for (int j = 0; j < 16 && i < this->pkt_header->caplen; i++, j++) {
+            printf("%02x ", this->pkt_data[i]);
+            line[j] = isprint(this->pkt_data[i]) ? this->pkt_data[i] : '.';
+        }
+        for (; i % 16 != 0; i++) {
+            printf("   ");
+        }
+        printf(" %.8s %.8s\n", line, line + 8);
     }
-    /* PRINT PADDING*/
-    for (int j = i % 16; j < 16; j++) {
-        printf("   ");
-    }
-
-    for (int j = i - i % 16; j < i; j++) {
-        if (j % 8 == 0)
-            printf(" ");
-        if (isprint(this->pkt_data[j]))
-            printf("%c", this->pkt_data[j]);
-        else
-            printf(".");
-    }
-
-    printf("\n\n");
+    printf("\n");
 }
 
 string packet::get_packet_time() {

@@ -137,20 +137,24 @@ int main(int argc, char **argv) {
 string set_filter(int port, int tcp, int udp, int icmp, int arp, int igmp) {
     string filter = "";
 
-    filter += tcp ? (filter.size() ? " or tcp" : "(tcp") : "";
-    filter += udp ? (filter.size() ? " or udp" : "(udp") : "";
-    filter += arp ? (filter.size() ? " or arp" : "(arp") : "";
-    filter += igmp ? (filter.size() ? " or igmp" : "(igmp") : "";
-    filter += icmp ? (filter.size() ? " or icmp or icmp6" : "(icmp or icmp6") : "";
-    filter += filter.size() ? ")" : "";
-    filter += port ? (filter.size() ? " and port " + to_string(port) : "port " + to_string(port)) : "";
+    if (port) {
+        filter += tcp ? (filter.size() ? " or tcp port " + std::to_string(port) : "tcp port " + std::to_string(port)) : "";
+        filter += udp ? (filter.size() ? " or udp port " + std::to_string(port) : "udp port " + std::to_string(port)) : "";
+    } else {
+        filter += tcp ? (filter.size() ? " or tcp" : "tcp") : "";
+        filter += udp ? (filter.size() ? " or udp" : "udp") : "";
+    }
+
+    filter += arp ? (filter.size() ? " or arp" : "arp") : "";
+    filter += igmp ? (filter.size() ? " or igmp" : "igmp") : "";
+    filter += icmp ? (filter.size() ? " or icmp or icmp6" : "icmp or icmp6") : "";
 
     return filter;
 }
 
 void handle_exit(int s) {
     if (s == 2) {
-        fprintf(stderr, "\nShutting down sniffer...\n");
+        printf("\nShutting down sniffer...\n");
         _sniffer.exit_sniffer();
         exit(1);
     }

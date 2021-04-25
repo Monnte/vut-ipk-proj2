@@ -157,7 +157,7 @@ void packet::print_data() {
         printf("0x%04x:  ", i);
         char line[17] = "";
         for (int j = 0; j < 16 && i < this->pkt_header->caplen; i++, j++) {
-            printf("%02x ", this->pkt_data[i]);
+            printf("%02X ", this->pkt_data[i]);
             line[j] = isprint(this->pkt_data[i]) ? this->pkt_data[i] : '.';
         }
         for (; i % 16 != 0; i++) {
